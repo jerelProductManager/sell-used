@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>B&H Sell Used — Trade-In Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;background:#f5f5f3;color:#1a1a1a;min-height:100vh}
+.shell{padding:24px 28px;max-width:1060px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #e0ddd6;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px}
+.bh-badge{background:#E8A020;color:#000;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;letter-spacing:.07em}
+.topbar-sub{font-size:11px;color:#888}
+.page-title{font-size:20px;font-weight:600;color:#111}
+.page-sub{font-size:12px;color:#888;margin-top:4px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.kpi{background:#fff;border:1px solid #e8e5de;border-radius:8px;padding:16px 18px;border-top:3px solid #ccc}
+.kpi.blue{border-top-color:#378ADD}
+.kpi.red{border-top-color:#E24B4A}
+.kpi.amber{border-top-color:#BA7517}
+.kpi.purple{border-top-color:#7F77DD}
+.kpi-label{font-size:11px;color:#888;letter-spacing:.05em;margin-bottom:7px;text-transform:uppercase}
+.kpi-val{font-size:26px;font-weight:700;color:#111;line-height:1}
+.kpi-sub{font-size:11px;color:#aaa;margin-top:5px}
+.kpi-flag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;display:inline-block;margin-top:7px}
+.flag-red{background:#FCEBEB;color:#A32D2D}
+.flag-amber{background:#FAEEDA;color:#854F0B}
+.flag-blue{background:#E6F1FB;color:#185FA5}
+.row2{display:grid;grid-template-columns:1.45fr 1fr;gap:14px;margin-bottom:14px}
+.row3{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;margin-bottom:14px}
+.card{background:#fff;border:1px solid #e8e5de;border-radius:10px;padding:18px 20px}
+.card-title{font-size:12px;font-weight:600;color:#333;letter-spacing:.04em;text-transform:uppercase;margin-bottom:3px}
+.card-sub{font-size:11px;color:#999;margin-bottom:14px}
+.dev-tabs{display:flex;gap:6px;margin-bottom:16px}
+.dev-tab{font-size:11px;font-weight:600;padding:5px 14px;border-radius:5px;border:1px solid #ddd;cursor:pointer;background:#fff;color:#888;transition:all .15s}
+.dev-tab:hover{background:#f5f5f3}
+.dev-tab.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.funnel-step{margin-bottom:12px}
+.funnel-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.funnel-stage{font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;color:#222}
+.step-num{width:20px;height:20px;border-radius:50%;background:#f0ede8;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#666;flex-shrink:0}
+.funnel-meta{font-size:11px;color:#999}
+.funnel-bar-bg{height:9px;background:#f0ede8;border-radius:5px;overflow:hidden}
+.funnel-bar{height:100%;border-radius:5px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.drop-pill{font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px}
+.drop-crit{background:#FCEBEB;color:#A32D2D}
+.drop-warn{background:#FAEEDA;color:#854F0B}
+.alert-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.alert{border-radius:7px;padding:10px 13px;border:1px solid}
+.alert-red{border-color:#F7C1C1;background:#FCEBEB}
+.alert-amber{border-color:#FAC775;background:#FAEEDA}
+.alert-head{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
+.alert-red .alert-head{color:#A32D2D}
+.alert-amber .alert-head{color:#854F0B}
+.alert-body{font-size:11px;color:#666;line-height:1.5}
+.entry-row{display:flex;flex-direction:column;gap:10px}
+.e-header{display:flex;justify-content:space-between;margin-bottom:4px}
+.e-name{font-size:12px;color:#333}
+.e-pct{font-size:12px;font-weight:600;color:#111}
+.e-bar-bg{height:8px;background:#f0ede8;border-radius:4px;overflow:hidden}
+.e-bar{height:100%;border-radius:4px}
+.insight-box{margin-top:14px;padding:11px 13px;background:#f8f7f4;border-radius:7px;border-left:3px solid #378ADD}
+.insight-box p{font-size:11px;color:#666;line-height:1.6}
+.friction-table{width:100%;border-collapse:collapse;font-size:12px}
+.friction-table th{font-size:10px;font-weight:700;color:#999;letter-spacing:.08em;text-align:left;padding:6px 8px;border-bottom:1px solid #eee;text-transform:uppercase}
+.friction-table td{padding:9px 8px;border-bottom:1px solid #f0ede8;vertical-align:middle}
+.friction-table tr:last-child td{border-bottom:none}
+.friction-table tr:hover td{background:#fafaf8}
+.pri-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px}
+.pri-crit{background:#FCEBEB;color:#A32D2D}
+.pri-high{background:#FAEEDA;color:#854F0B}
+.pri-med{background:#EAF3DE;color:#3B6D11}
+.sent-red{color:#A32D2D;font-weight:600}
+.sent-muted{color:#aaa}
+.geo-stack{display:flex;flex-direction:column;gap:0}
+.geo-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0ede8}
+.geo-row:last-child{border-bottom:none}
+.geo-name{font-size:12px;font-weight:600;color:#222}
+.geo-note{font-size:11px;color:#aaa;margin-top:2px}
+.geo-note.flagged{color:#BA7517}
+.geo-num{font-size:19px;font-weight:700;color:#111}
+.geo-num.flagged{color:#BA7517}
+.trust-box{margin-top:12px;padding:13px 15px;border:1px solid #C0DD97;border-radius:8px;background:#f4fae9}
+.trust-head{font-size:11px;font-weight:700;color:#3B6D11;margin-bottom:5px}
+.trust-body{font-size:12px;color:#555;line-height:1.6}
+.trust-tip{font-size:11px;margin-top:8px;color:#3B6D11;font-weight:600}
+.roadmap-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.rm-card{background:#f8f7f4;border-radius:8px;padding:12px 13px;border-top:3px solid}
+.rm-card.green{border-top-color:#639922}
+.rm-card.amber{border-top-color:#BA7517}
+.rm-card.red{border-top-color:#E24B4A}
+.rm-card.blue{border-top-color:#378ADD}
+.rm-name{font-size:11px;font-weight:600;line-height:1.45;margin-bottom:5px;color:#222}
+.rm-owner{font-size:10px;color:#aaa;margin-bottom:9px}
+.rm-footer{display:flex;flex-direction:column;gap:4px}
+.rm-status{font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;display:inline-block}
+.rm-timeline{font-size:10px;color:#999}
+.footer-bar{display:flex;justify-content:space-between;font-size:11px;color:#bbb;margin-top:16px;padding-top:14px;border-top:1px solid #e8e5de}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <span class="bh-badge">B&H</span>
+      <span class="topbar-sub">Sell Used · Research &amp; Analytics Dashboard</span>
+    </div>
+    <span class="topbar-sub">Mar 2025 – Mar 2026 · Medallia + GA</span>
+  </div>
+
+  <div>
+    <div class="page-title">Trade-in program performance</div>
+    <div class="page-sub">Prepared for Isaac Mittelman, Used Department · March 2026</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi blue">
+      <div class="kpi-label">Total sessions</div>
+      <div class="kpi-val">194,757</div>
+      <div class="kpi-sub">Quote flow page visits</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-label">Quote completion</div>
+      <div class="kpi-val">8.5%</div>
+      <div class="kpi-sub">Page visit → submitted quote</div>
+      <span class="kpi-flag flag-red">Critical gap</span>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-label">Largest dropoff</div>
+      <div class="kpi-val">66.6%</div>
+      <div class="kpi-sub">Search → add to basket</div>
+      <span class="kpi-flag flag-amber">Find issue</span>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-label">Mobile users</div>
+      <div class="kpi-val">529</div>
+      <div class="kpi-sub">vs 185,103 desktop (0.3%)</div>
+      <span class="kpi-flag flag-blue">Underserved</span>
+    </div>
+  </div>
+
+  <div class="row2">
+    <div class="card">
+      <div class="card-title">Quote funnel abandonment</div>
+      <div class="card-sub">Where users are leaving the flow</div>
+      <div class="dev-tabs">
+        <button class="dev-tab active" onclick="setDevice('overall',this)">Overall</button>
+        <button class="dev-tab" onclick="setDevice('desktop',this)">Desktop</button>
+        <button class="dev-tab" onclick="setDevice('mobile',this)">Mobile</button>
+      </div>
+      <div id="funnel-steps"></div>
+      <div class="alert-row">
+        <div class="alert alert-red">
+          <div class="alert-head">Find issue</div>
+          <div class="alert-body">Greatest drop at search→basket (66.6%). Users can't locate what they want to sell.</div>
+        </div>
+        <div class="alert alert-amber">
+          <div class="alert-head">Commit issue</div>
+          <div class="alert-body">Second drop at basket→submit (60.4%). Users hesitate before committing to the quote.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Traffic entry points</div>
+      <div class="card-sub">How users arrive at the Sell Used page</div>
+      <div class="entry-row" id="entry-bars"></div>
+      <div class="insight-box">
+        <p><strong>Key insight:</strong> 66% of traffic is organic search or direct — brand trust drives acquisition. Email is only 3.26%, suggesting campaigns are underutilized as a re-engagement channel.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row3">
+    <div class="card">
+      <div class="card-title">Top customer friction areas</div>
+      <div class="card-sub">From Medallia survey data · ranked by sentiment severity</div>
+      <table class="friction-table">
+        <thead>
+          <tr><th>Issue</th><th>Sentiment</th><th>Priority</th><th>Initiative</th><th>Target</th></tr>
+        </thead>
+        <tbody id="friction-rows"></tbody>
+      </table>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card">
+        <div class="card-title">Geographic breakdown</div>
+        <div class="card-sub">Quote flow users by region</div>
+        <div class="geo-stack" id="geo-rows"></div>
+        <div style="margin-top:10px;font-size:11px;color:#bbb;font-style:italic">Age demographic data is unreliable / not captured.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Key differentiator</div>
+        <div class="trust-box">
+          <div class="trust-head">Trust &amp; honesty — #1 customer attribute</div>
+          <div class="trust-body">Customers consistently rank trust as B&amp;H Used's top positive attribute. All UX decisions should reinforce, not erode, this perception.</div>
+          <div class="trust-tip">→ Tax-free trade-in is an underutilized competitive equivalent to MPB/KEH cash bonuses</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:14px">Active roadmap initiatives · Web / UX / Research · 2026</div>
+    <div class="roadmap-grid" id="roadmap-cards"></div>
+  </div>
+
+  <div class="footer-bar">
+    <span>B&H Sell Used · Web &amp; UX Team · Confidential</span>
+    <span>Medallia Surveys + Google Analytics · Mar 2025–Mar 2026</span>
+  </div>
+</div>
+
+<script>
+const funnelData={
+  overall:[
+    {stage:"Page visit",pct:100,label:"194,757 users"},
+    {stage:"Search / category click",pct:62.7,label:"62.7% continue",drop:"37.3% drop",dropClass:"drop-warn"},
+    {stage:"Add to basket",pct:33.4,label:"33.4% continue",drop:"66.6% drop",dropClass:"drop-crit"},
+    {stage:"Submit quote",pct:13.4,label:"13.4% reach quote",drop:"60.4% drop",dropClass:"drop-crit"},
+  ],
+  desktop:[
+    {stage:"Page visit",pct:100,label:"185,103 users"},
+    {stage:"Search / category click",pct:63.6,label:"63.6% continue",drop:"36.4% drop",dropClass:"drop-warn"},
+    {stage:"Add to basket",pct:33.7,label:"33.7% continue",drop:"66.3% drop",dropClass:"drop-crit"},
+    {stage:"Submit quote",pct:13.6,label:"13.6% reach quote",drop:"60.3% drop",dropClass:"drop-crit"},
+  ],
+  mobile:[
+    {stage:"Page visit",pct:100,label:"529 users"},
+    {stage:"Search / category click",pct:41.6,label:"41.6% continue",drop:"58.4% drop",dropClass:"drop-crit"},
+    {stage:"Add to basket",pct:40,label:"40% continue",drop:"60% drop",dropClass:"drop-crit"},
+    {stage:"Submit quote",pct:50,label:"50% reach quote",drop:"50% drop",dropClass:"drop-warn"},
+  ],
+};
+
+const entryData=[
+  {name:"Organic search",pct:38.21,color:"#378ADD"},
+  {name:"Direct",pct:28.38,color:"#185FA5"},
+  {name:"Paid shopping",pct:13.54,color:"#8E44AD"},
+  {name:"Paid search",pct:8.09,color:"#1D9E75"},
+  {name:"Email",pct:3.26,color:"#BA7517"},
+  {name:"Other",pct:8.52,color:"#888780"},
+];
+
+const frictionData=[
+  {issue:"Search tool deficiencies",sent:"0% positive",sentClass:"sent-red",pri:"Critical",priClass:"pri-crit",initiative:"Used Type Ahead",target:"H1"},
+  {issue:"No transaction history",sent:"0% positive",sentClass:"sent-red",pri:"Critical",priClass:"pri-crit",initiative:"Order history",target:"H2"},
+  {issue:"Session persistence (basket resets)",sent:"0% positive",sentClass:"sent-red",pri:"High",priClass:"pri-high",initiative:"Sell Used revamp",target:"H2"},
+  {issue:"Payment communication gaps",sent:"Low",sentClass:"sent-muted",pri:"High",priClass:"pri-high",initiative:"Trade-in email",target:"Apr sprint"},
+  {issue:"Product valuation concerns",sent:"Mixed",sentClass:"sent-muted",pri:"Medium",priClass:"pri-med",initiative:"Condition rating scale",target:"Jun target"},
+  {issue:"Used good rejection",sent:"Low",sentClass:"sent-muted",pri:"Medium",priClass:"pri-med",initiative:"Process comms",target:"TBD"},
+];
+
+const geoData=[
+  {country:"United States",users:"171,367",note:"Primary market",flagged:false},
+  {country:"Canada",users:"4,276",note:"Standard completion rate",flagged:false},
+  {country:"India",users:"1,587",note:"~10% completion — anomalous",flagged:true},
+];
+
+const roadmapData=[
+  {name:"Trade-in quote email",owner:"John (UX)",timeline:"Apr sprint",status:"In progress",color:"green",statusBg:"#EAF3DE",statusTxt:"#3B6D11"},
+  {name:"Sell Used page revamp",owner:"John + Research",timeline:"H2",status:"Research",color:"amber",statusBg:"#E6F1FB",statusTxt:"#185FA5"},
+  {name:"Used Type Ahead",owner:"TBD",timeline:"H2",status:"Research",color:"amber",statusBg:"#E6F1FB",statusTxt:"#185FA5"},
+  {name:"Condition rating scale",owner:"Isaac + Yoshi",timeline:"Jun target",status:"In progress",color:"green",statusBg:"#EAF3DE",statusTxt:"#3B6D11"},
+  {name:"Used photography (Ortery)",owner:"Used ops",timeline:"Aug",status:"Planned",color:"blue",statusBg:"#E6F1FB",statusTxt:"#185FA5"},
+  {name:"Web metrics dashboard",owner:"Isaac",timeline:"H2",status:"Scoping",color:"amber",statusBg:"#FAEEDA",statusTxt:"#854F0B"},
+  {name:"PDP condition grouping",owner:"TBD",timeline:"H1/H2",status:"Blocked",color:"red",statusBg:"#FCEBEB",statusTxt:"#A32D2D"},
+];
+
+function renderFunnel(device){
+  const data=funnelData[device];
+  document.getElementById("funnel-steps").innerHTML=data.map((s,i)=>`
+    <div class="funnel-step">
+      <div class="funnel-label-row">
+        <div class="funnel-stage">
+          <div class="step-num">${i+1}</div>
+          ${s.stage}
+          ${s.drop?`<span class="drop-pill ${s.dropClass}">${s.drop}</span>`:""}
+        </div>
+        <div class="funnel-meta">${s.label}</div>
+      </div>
+      <div class="funnel-bar-bg">
+        <div class="funnel-bar" style="width:${s.pct}%;background:${s.pct>70?"#378ADD":s.pct>35?"#BA7517":"#E24B4A"}"></div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function setDevice(device,btn){
+  document.querySelectorAll(".dev-tab").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderFunnel(device);
+}
+
+document.getElementById("entry-bars").innerHTML=entryData.map(e=>`
+  <div>
+    <div class="e-header"><span class="e-name">${e.name}</span><span class="e-pct">${e.pct}%</span></div>
+    <div class="e-bar-bg"><div class="e-bar" style="width:${e.pct}%;background:${e.color}"></div></div>
+  </div>
+`).join("");
+
+document.getElementById("friction-rows").innerHTML=frictionData.map(f=>`
+  <tr>
+    <td style="font-weight:600;color:#222">${f.issue}</td>
+    <td class="${f.sentClass}">${f.sent}</td>
+    <td><span class="pri-badge ${f.priClass}">${f.pri}</span></td>
+    <td style="color:#999">${f.initiative}</td>
+    <td style="font-weight:600;color:#666">${f.target}</td>
+  </tr>
+`).join("");
+
+document.getElementById("geo-rows").innerHTML=geoData.map(g=>`
+  <div class="geo-row">
+    <div>
+      <div class="geo-name">${g.country}</div>
+      <div class="geo-note${g.flagged?" flagged":""}">${g.note}</div>
+    </div>
+    <div class="geo-num${g.flagged?" flagged":""}">${g.users}</div>
+  </div>
+`).join("");
+
+document.getElementById("roadmap-cards").innerHTML=roadmapData.map(r=>`
+  <div class="rm-card ${r.color}">
+    <div class="rm-name">${r.name}</div>
+    <div class="rm-owner">${r.owner}</div>
+    <div class="rm-footer">
+      <span class="rm-status" style="background:${r.statusBg};color:${r.statusTxt}">${r.status}</span>
+      <span class="rm-timeline">${r.timeline}</span>
+    </div>
+  </div>
+`).join("");
+
+renderFunnel("overall");
+</script>
+</body>
+</html>
