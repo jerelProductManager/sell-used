@@ -10,19 +10,14 @@
 body{font-family:'Montserrat',sans-serif;background:#f4f5f7;color:#1a1a1a;min-height:100vh;padding:32px 24px 48px}
 .page{max-width:960px;margin:0 auto}
 
-/* Top bar */
-.topbar{height:4px;background:linear-gradient(90deg,#C8993A 0%,#e8b84b 50%,#C8993A 100%);border-radius:2px 2px 0 0;margin-bottom:0}
+.topbar{height:4px;background:linear-gradient(90deg,#C8993A 0%,#e8b84b 50%,#C8993A 100%);border-radius:2px 2px 0 0}
 
-/* Header card */
 .header-card{background:#0F1F4B;border-radius:0 0 8px 8px;padding:20px 28px 22px;margin-bottom:20px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
-.header-left{}
 .header-eyebrow{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(200,153,58,.75);margin-bottom:6px}
 .header-title{font-size:22px;font-weight:800;color:#fff;letter-spacing:.3px;line-height:1.2}
 .header-sub{font-size:12px;color:rgba(255,255,255,.45);margin-top:5px;font-weight:400}
-.header-right{text-align:right;flex-shrink:0}
 .header-date{font-size:11px;color:rgba(255,255,255,.35);font-weight:600;letter-spacing:.5px}
 
-/* Metric cards */
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
 .metric{background:#fff;border-radius:8px;padding:16px 18px;border:1px solid #e8e8e8}
 .metric-label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#888;margin-bottom:6px}
@@ -33,18 +28,28 @@ body{font-family:'Montserrat',sans-serif;background:#f4f5f7;color:#1a1a1a;min-he
 .metric.mobile .metric-share{color:#3B6D11}
 .metric.tablet .metric-share{color:#854F0B}
 
-/* Chart card */
 .chart-card{background:#fff;border-radius:8px;padding:24px 24px 20px;border:1px solid #e8e8e8;margin-bottom:20px}
-.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.chart-title{font-size:13px;font-weight:700;color:#1a1a1a;letter-spacing:.2px}
-.chart-note{font-size:11px;color:#aaa;font-weight:400}
+.delta-card{background:#fff;border-radius:8px;padding:24px 24px 20px;border:1px solid #e8e8e8;margin-bottom:20px;overflow-x:auto}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:700;color:#1a1a1a;letter-spacing:.2px}
+.card-note{font-size:11px;color:#aaa;font-weight:400}
 .legend{display:flex;gap:20px;margin-bottom:18px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#555}
-.legend-swatch{width:22px;height:3px;border-radius:2px;flex-shrink:0}
 .chart-wrap{position:relative;width:100%;height:300px}
 
-/* Insight card */
-.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.delta-table{width:100%;border-collapse:collapse;font-size:11.5px;min-width:640px}
+.delta-table th{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#aaa;padding:6px 10px;border-bottom:2px solid #eee;text-align:right;white-space:nowrap}
+.delta-table th:first-child{text-align:left}
+.delta-table td{padding:7px 10px;border-bottom:1px solid #f2f2f2;text-align:right;font-weight:600;white-space:nowrap;color:#1a1a1a}
+.delta-table td:first-child{text-align:left;color:#777}
+.delta-table tr:last-child td{border-bottom:none}
+.delta-table tr:hover td{background:#fafafa}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:3px;font-size:10.5px;font-weight:700}
+.badge-up{background:#eaf3de;color:#2d5c0e}
+.badge-dn{background:#fdecea;color:#992020}
+.badge-nc{background:#f2f2f2;color:#aaa}
+
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .insight{background:#fff;border-radius:8px;padding:16px 18px;border:1px solid #e8e8e8;border-top:3px solid #e8e8e8}
 .insight.navy{border-top-color:#0F1F4B}
 .insight.gold{border-top-color:#C8993A}
@@ -53,8 +58,7 @@ body{font-family:'Montserrat',sans-serif;background:#f4f5f7;color:#1a1a1a;min-he
 .insight-stat{font-size:20px;font-weight:800;color:#0F1F4B;margin-bottom:4px}
 .insight-desc{font-size:11px;color:#777;line-height:1.5;font-weight:500}
 
-/* Footer */
-.footer{margin-top:20px;text-align:center;font-size:11px;color:#bbb;font-weight:500}
+.footer{text-align:center;font-size:11px;color:#bbb;font-weight:500}
 </style>
 </head>
 <body>
@@ -63,12 +67,12 @@ body{font-family:'Montserrat',sans-serif;background:#f4f5f7;color:#1a1a1a;min-he
   <div class="topbar"></div>
 
   <div class="header-card">
-    <div class="header-left">
+    <div>
       <div class="header-eyebrow">B&amp;H Used Web · GA4 Analysis</div>
       <div class="header-title">Sell Used Page Traffic</div>
       <div class="header-sub">Active users by device category · January 1 – April 23, 2026</div>
     </div>
-    <div class="header-right">
+    <div style="text-align:right;flex-shrink:0">
       <div class="header-date">EXPORTED 04 / 23 / 2026</div>
     </div>
   </div>
@@ -97,27 +101,45 @@ body{font-family:'Montserrat',sans-serif;background:#f4f5f7;color:#1a1a1a;min-he
   </div>
 
   <div class="chart-card">
-    <div class="chart-header">
-      <div class="chart-title">Daily active users (7-day rolling average)</div>
-      <div class="chart-note">Weekly averages shown for readability</div>
+    <div class="card-header">
+      <div class="card-title">Daily active users — weekly averages</div>
+      <div class="card-note">Hover points for week-over-week delta</div>
     </div>
     <div class="legend">
       <div class="legend-item">
-        <div class="legend-swatch" style="background:#185FA5"></div>
-        Desktop
+        <div style="width:22px;height:3px;background:#185FA5;border-radius:2px;flex-shrink:0"></div>Desktop
       </div>
       <div class="legend-item">
-        <div class="legend-swatch" style="background:#3B6D11;border-top:2px dashed #3B6D11;background:none;border-bottom:none;"></div>
-        Mobile
+        <div style="width:22px;height:0;border-top:2px dashed #3B6D11;flex-shrink:0"></div>Mobile
       </div>
       <div class="legend-item">
-        <div class="legend-swatch" style="background:#854F0B;border-top:2px dotted #854F0B;background:none;border-bottom:none;"></div>
-        Tablet
+        <div style="width:22px;height:0;border-top:2px dotted #854F0B;flex-shrink:0"></div>Tablet
       </div>
     </div>
     <div class="chart-wrap">
-      <canvas id="trafficChart" role="img" aria-label="Line chart of Sell Used page active users by device type from January 1 to April 23, 2026. Desktop dominates at roughly 1,500–2,900 daily users. Mobile and tablet each stay below 100.">Desktop: 33,362 total. Mobile: 1,326 total. Tablet: 1,221 total.</canvas>
+      <canvas id="trafficChart" role="img" aria-label="Line chart of Sell Used page active users by device, Jan 1 to Apr 23 2026. Desktop dominates at 1500 to 2900 daily users. Mobile and tablet stay below 100.">Desktop: 33,362 total. Mobile: 1,326. Tablet: 1,221.</canvas>
     </div>
+  </div>
+
+  <div class="delta-card">
+    <div class="card-header">
+      <div class="card-title">Week-over-week change by device</div>
+      <div class="card-note">Avg daily active users vs. prior 7-day period</div>
+    </div>
+    <table class="delta-table">
+      <thead>
+        <tr>
+          <th>Week starting</th>
+          <th>Desktop avg</th>
+          <th>&#916; vs prior</th>
+          <th>Mobile avg</th>
+          <th>&#916; vs prior</th>
+          <th>Tablet avg</th>
+          <th>&#916; vs prior</th>
+        </tr>
+      </thead>
+      <tbody id="deltaBody"></tbody>
+    </table>
   </div>
 
   <div class="insights">
@@ -144,7 +166,7 @@ body{font-family:'Montserrat',sans-serif;background:#f4f5f7;color:#1a1a1a;min-he
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const raw = [
+var raw = [
   {d:'2026-01-01',dt:1501,m:45,t:49},{d:'2026-01-02',dt:2011,m:50,t:50},{d:'2026-01-03',dt:1586,m:50,t:51},
   {d:'2026-01-04',dt:1811,m:53,t:50},{d:'2026-01-05',dt:2553,m:53,t:50},{d:'2026-01-06',dt:2474,m:53,t:35},
   {d:'2026-01-07',dt:2415,m:55,t:43},{d:'2026-01-08',dt:2367,m:60,t:41},{d:'2026-01-09',dt:2112,m:39,t:41},
@@ -187,33 +209,60 @@ const raw = [
   {d:'2026-04-22',dt:2330,m:51,t:46},{d:'2026-04-23',dt:1478,m:27,t:28}
 ];
 
-const sorted = raw.sort((a,b) => a.d.localeCompare(b.d));
+raw.sort(function(a,b){ return a.d < b.d ? -1 : 1; });
 
-function toWeekly(data) {
-  const weeks = [];
-  for (let i = 0; i < data.length; i += 7) {
-    const chunk = data.slice(i, Math.min(i+7, data.length));
-    const label = chunk[0].d.slice(5);
-    weeks.push({
-      label,
-      dt: Math.round(chunk.reduce((s,r)=>s+r.dt,0)/chunk.length),
-      m:  Math.round(chunk.reduce((s,r)=>s+r.m,0)/chunk.length),
-      t:  Math.round(chunk.reduce((s,r)=>s+r.t,0)/chunk.length)
-    });
-  }
-  return weeks;
+var weekly = [];
+for (var i = 0; i < raw.length; i += 7) {
+  var chunk = raw.slice(i, Math.min(i+7, raw.length));
+  var sumDt = 0, sumM = 0, sumT = 0;
+  for (var j = 0; j < chunk.length; j++) { sumDt += chunk[j].dt; sumM += chunk[j].m; sumT += chunk[j].t; }
+  weekly.push({
+    label: chunk[0].d.slice(5),
+    dt: Math.round(sumDt / chunk.length),
+    m:  Math.round(sumM  / chunk.length),
+    t:  Math.round(sumT  / chunk.length)
+  });
 }
 
-const weekly = toWeekly(sorted);
+function badge(curr, prev) {
+  if (prev === undefined || prev === null) {
+    return '<span class="badge badge-nc">—</span>';
+  }
+  var diff = curr - prev;
+  var pct = Math.round((diff / prev) * 100);
+  if (diff > 0) {
+    return '<span class="badge badge-up">&#9650; +' + diff.toLocaleString() + ' (+' + pct + '%)</span>';
+  }
+  if (diff < 0) {
+    return '<span class="badge badge-dn">&#9660; ' + diff.toLocaleString() + ' (' + pct + '%)</span>';
+  }
+  return '<span class="badge badge-nc">0</span>';
+}
+
+var tbody = document.getElementById('deltaBody');
+for (var i = 0; i < weekly.length; i++) {
+  var w = weekly[i];
+  var prev = i > 0 ? weekly[i-1] : null;
+  var tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td>' + w.label + '</td>' +
+    '<td>' + w.dt.toLocaleString() + '</td>' +
+    '<td>' + badge(w.dt, prev ? prev.dt : undefined) + '</td>' +
+    '<td>' + w.m.toLocaleString() + '</td>' +
+    '<td>' + badge(w.m, prev ? prev.m : undefined) + '</td>' +
+    '<td>' + w.t.toLocaleString() + '</td>' +
+    '<td>' + badge(w.t, prev ? prev.t : undefined) + '</td>';
+  tbody.appendChild(tr);
+}
 
 new Chart(document.getElementById('trafficChart'), {
   type: 'line',
   data: {
-    labels: weekly.map(w => w.label),
+    labels: weekly.map(function(w){ return w.label; }),
     datasets: [
       {
         label: 'Desktop',
-        data: weekly.map(w => w.dt),
+        data: weekly.map(function(w){ return w.dt; }),
         borderColor: '#185FA5',
         backgroundColor: 'rgba(24,95,165,0.06)',
         borderWidth: 2.5,
@@ -224,7 +273,7 @@ new Chart(document.getElementById('trafficChart'), {
       },
       {
         label: 'Mobile',
-        data: weekly.map(w => w.m),
+        data: weekly.map(function(w){ return w.m; }),
         borderColor: '#3B6D11',
         borderDash: [6,4],
         borderWidth: 2,
@@ -236,7 +285,7 @@ new Chart(document.getElementById('trafficChart'), {
       },
       {
         label: 'Tablet',
-        data: weekly.map(w => w.t),
+        data: weekly.map(function(w){ return w.t; }),
         borderColor: '#854F0B',
         borderDash: [2,4],
         borderWidth: 2,
@@ -255,7 +304,22 @@ new Chart(document.getElementById('trafficChart'), {
       legend: { display: false },
       tooltip: {
         callbacks: {
-          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()} avg daily users`
+          label: function(ctx) {
+            var idx = ctx.dataIndex;
+            var val = ctx.parsed.y;
+            var keys = ['dt','m','t'];
+            var key = keys[ctx.datasetIndex];
+            var prevVal = idx > 0 ? weekly[idx-1][key] : null;
+            var arrow = '';
+            if (prevVal !== null) {
+              var diff = val - prevVal;
+              var pct = Math.round((diff / prevVal) * 100);
+              if (diff > 0) arrow = '  \u25b2 +' + diff.toLocaleString() + ' (+' + pct + '%)';
+              else if (diff < 0) arrow = '  \u25bc ' + diff.toLocaleString() + ' (' + pct + '%)';
+              else arrow = '  \u2014 0';
+            }
+            return ' ' + ctx.dataset.label + ': ' + val.toLocaleString() + arrow;
+          }
         }
       }
     },
@@ -269,7 +333,7 @@ new Chart(document.getElementById('trafficChart'), {
         ticks: {
           font: { size: 11, family: 'Montserrat' },
           color: '#aaa',
-          callback: v => v.toLocaleString()
+          callback: function(v){ return v.toLocaleString(); }
         },
         grid: { color: 'rgba(0,0,0,0.06)' },
         title: { display: true, text: 'Avg daily active users', font: { size: 11, family: 'Montserrat' }, color: '#aaa' }
